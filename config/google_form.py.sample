@@ -1,7 +1,9 @@
+def _main_google_form(form_id, form_values):
+    return f"https://docs.google.com/forms/d/e/{form_id}/formResponse?usp=pp_url&{form_values}&submit=Submit"
+
 # Change your google form id
 BH1750_GOOGLE_FORM_ID = ""
 
 def bh1750_get_google_form_url(timestamp, device_id, value):
-    url = f"https://docs.google.com/forms/d/e/{BH1750_GOOGLE_FORM_ID}/formResponse?usp=pp_url&entry.1077796647={timestamp}&entry.1434834196={device_id}&entry.1213168095={value}&submit=Submit"
-    print(url)
-    return url
+    form_values = f"entry.1077796647={timestamp}&entry.1434834196={device_id}&entry.1213168095={value}"
+    return _main_google_form(BH1750_GOOGLE_FORM_ID, form_values)
