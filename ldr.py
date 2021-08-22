@@ -10,7 +10,7 @@ from datetime import datetime
 import os
 import requests
 import time
-from gpiozero import LED
+from gpiozero import LightSensor
 
 SLEEP_TIME = 6
 DEVICE_ID = os.popen("cat /sys/firmware/devicetree/base/serial-number").read()
