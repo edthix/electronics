@@ -7,6 +7,7 @@ http://www.pibits.net/code/raspberry-pi-bh1750-light-sensor.php
 
 import smbus
 import time
+from config.google_form import bh1750_get_google_form_url
 
 DEVICE			= 0x23 # default I2C state
 POWER_DOWN		= 0x00 # no active state
