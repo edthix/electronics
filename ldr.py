@@ -14,7 +14,7 @@ from gpiozero import LED
 
 SLEEP_TIME = 6
 DEVICE_ID = os.popen("cat /sys/firmware/devicetree/base/serial-number").read()
-ldr = LightSensor(7)
+ldr = LightSensor(4) # GPIO4 / Pin 7
 
 
 def save_to_google_form(reading):
@@ -23,8 +23,9 @@ def save_to_google_form(reading):
 
 def main():
     while True:
-        ldr.wait_for_light()
-        print("lights up")
+        value = ldr.value
+        save_to_google_form(value)
+        time.sleep(SLEEP_TIME)
 
 if __name__ == "__main__":
     main()
