@@ -18,7 +18,7 @@ POWER_UP = 0x01  # power on
 RESET = 0x07  # reset data register value
 ONE_TIME_HIGH_RES_MODE = 0x20
 
-SLEEP_TIME = 10
+SLEEP_TIME = 60
 DEVICE_ID = os.popen("cat /sys/firmware/devicetree/base/serial-number").read()
 bus = smbus.SMBus(1)
 
