@@ -8,6 +8,7 @@ http://www.pibits.net/code/raspberry-pi-bh1750-light-sensor.php
 from config.google_form import bh1750_get_google_form_url
 from datetime import datetime
 import os
+import requests
 import smbus
 import time
 
@@ -24,17 +25,17 @@ bus = smbus.SMBus(1)
 
 
 def save_to_google_form(reading):
-    bh1750_get_google_form_url(str(datetime.now()), DEVICE_ID, value)
-    print(f"saved to google form - value : {reading}")
-
+  url = bh1750_get_google_form_url(str(datetime.now()), DEVICE_ID, value)
+  r = requests.get(url)
+  print(f"saved to google form - value : {reading}, status : {r.status_code}")
 
 def main():
     while True:
-        data = bus.read_i2c_block_data(DEVICE, ONE_TIME_HIGH_RES_MODE)
-        value = (data[1] + (256 * data[0])) / 1.2
-        save_to_google_form(value)
-        time.sleep(SLEEP_TIME)
+      data = bus.read_i2c_block_data(DEVICE, ONE_TIME_HIGH_RES_MODE)
+      value = (data[1] + (256 * data[0])) / 1.2
+      save_to_google_form(value)
+      time.sleep(SLEEP_TIME)
 
 
 if __name__ == "__main__":
-    main()
+  main()
