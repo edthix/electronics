@@ -20,13 +20,12 @@ ONE_TIME_HIGH_RES_MODE = 0x20
 
 SLEEP_TIME = 10
 DEVICE_ID = os.system("cat /sys/firmware/devicetree/base/serial-number")
-
 bus = smbus.SMBus(1)
-
 
 def save_to_google_form(reading):
   url = bh1750_get_google_form_url(str(datetime.now()), DEVICE_ID, reading)
   r = requests.get(url)
+  print(url)
   print(f"saved to google form - value : {reading}, status : {r.status_code}")
 
 def main():
