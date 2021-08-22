@@ -19,7 +19,7 @@ RESET = 0x07  # reset data register value
 ONE_TIME_HIGH_RES_MODE = 0x20
 
 SLEEP_TIME = 10
-DEVICE_ID = os.system("cat /sys/firmware/devicetree/base/serial-number")
+DEVICE_ID = os.popen("cat /sys/firmware/devicetree/base/serial-number").read()
 bus = smbus.SMBus(1)
 
 def save_to_google_form(reading):
