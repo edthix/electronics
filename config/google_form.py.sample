@@ -2,6 +2,6 @@
 BH1750_GOOGLE_FORM_ID = ""
 
 def bh1750_get_google_form_url(timestamp, device_id, value):
-    url = f"https://docs.google.com/forms/d/e/{BH1750_GOOGLE_FORM_ID}/viewform?usp=pp_url&entry.1077796647={timestamp}&entry.1434834196={device_id}&entry.1213168095={value}&submit=Submit"
+    url = f"https://docs.google.com/forms/d/e/{BH1750_GOOGLE_FORM_ID}/formResponse?usp=pp_url&entry.1077796647={timestamp}&entry.1434834196={device_id}&entry.1213168095={value}&submit=Submit"
     print(url)
     return url
