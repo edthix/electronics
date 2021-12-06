@@ -54,13 +54,13 @@ def main():
     """
     while True:
         time.sleep(sleep_time)
-        temp_c = dht22.temperature
+        temp_c = dht22.temperature # in celcius
         print("Temperature is", temp_c)
 
         favoriot_payload = json.dumps({
             "device_developer_id": device_developer_id,
             "data": {
-                "temperature": temp
+                "temperature": temp_c
             }
         })
 
