@@ -57,7 +57,8 @@ def main():
         temp_c = dht22.temperature # in celcius
         print("Temperature is", temp_c)
 
-        favoriot_payload = json.dumps({
+        # What we want to send to favoriot
+        payload = json.dumps({
             "device_developer_id": device_developer_id,
             "data": {
                 "temperature": temp_c
