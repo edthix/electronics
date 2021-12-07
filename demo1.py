@@ -55,16 +55,19 @@ headers["Content-Type"] = "application/json"
 headers["apiKey"] = api_key
 
 
-def favoriot_payload(device_developer_id, data):
+def send_to_favoriot(device_developer_id, data):
     """
-    Generate favoriot payload
+    Generate favoriot payload and send to favoriot
     """
-    return json.dumps(
+    payload = json.dumps(
         {
             "device_developer_id": device_developer_id,
             "data": data,
         }
     )
+
+    r = requests.post(api_url, headers=headers, data=payload)
+    print("sent to favoriot", r)
 
 
 def soil_moisture_callback(channel):
@@ -74,16 +77,12 @@ def soil_moisture_callback(channel):
     soil_moisture_reading = 0
 
     if GPIO.input(channel):
-        print("No water detected")
         soil_moisture_reading = 0
     else:
-        print("Water detected")
         soil_moisture_reading = 1
 
-    payload = favoriot_payload(
-        device_developer_id, {"soil_moisture": soil_moisture_reading}
-    )
-    requests.post(api_url, headers=headers, data=payload)
+    print("Soil Moisture", soil_moisture_reading)
+    send_to_favoriot(device_developer_id, {"soil_moisture": soil_moisture_reading})
 
 
 GPIO.add_event_detect(
@@ -98,6 +97,12 @@ def main():
     """
     Main function
     """
+
+    print(
+        "--------------------------------------------------------------------------------"
+    )
+    print("START READING DATA")
+
     while True:
         time.sleep(
             sleep_time
@@ -105,24 +110,21 @@ def main():
 
         try:
             temp_c = dht22.temperature  # in celcius
-            print("Temperature is", temp_c)
+            print("Temperature (C)", temp_c)
 
-            # What we want to send to favoriot
-            payload = favoriot_payload(device_developer_id, {"temperature": temp_c})
-
-            res = requests.post(api_url, headers=headers, data=payload)
-            print(res)
+            send_to_favoriot(device_developer_id, {"temperature": temp_c})
 
             if temp_c > max_temp:
                 bot.send_message(chat_id=telegram_channel_id, text=telegram_text)
 
-            print(
-                "--------------------------------------------------------------------------------"
-            )
         except:
             print(
                 "error detected during reading of DHT22 sensor - do nothing and wait for next reading"
             )
+
+        print(
+            "--------------------------------------------------------------------------------"
+        )
 
 
 if __name__ == "__main__":
